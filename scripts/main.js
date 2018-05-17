@@ -1,12 +1,8 @@
 $(document).ready(function() {
   url =
     "https://opentdb.com/api.php?amount=1&category=15&difficulty=easy&type=multiple";
-  $("#test").click(function() {
-    console.log("this is working");
-  });
 
   $("#questionBtn").click(function() {
-    console.log("clicked");
     $.getJSON(url)
       .done(function(data) {
         var q = data.results[0].question;
