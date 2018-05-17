@@ -6,8 +6,9 @@ $(document).ready(function() {
     $.getJSON(url)
       .done(function(data) {
         var q = data.results[0].question;
-        var wrongAnswer = data.results[0].incorrect_answers;
+        var baseAnswer = data.results[0].incorrect_answers;
         var correctAnswer = data.results[0].correct_answer;
+        baseAnswer.push(correctAnswer);
 
         if (
           q.indexOf("&quot;") >= 0 ||
@@ -23,10 +24,16 @@ $(document).ready(function() {
         }
         $("#question").text(res);
 
-        $("#a").text(wrongAnswer[0]);
-        $("#b").text(wrongAnswer[1]);
-        $("#c").text(wrongAnswer[2]);
-        $("#d").text(correctAnswer);
+        //shuffling the array
+        let randomAnswers = function shuffleArray(array) {
+          for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]]; // eslint-disable-line no-param-reassign
+          }
+          return array;
+        };
+
+        $("#answer").text(randomAnswers(baseAnswer));
       })
       .fail(function(err) {
         console.log(err);
